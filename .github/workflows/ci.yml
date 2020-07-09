@@ -1,43 +1,46 @@
 name: CI
 
-# Trigger the workflow on push or pull request, but only for the master branch
 on:
-  pull_request:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
   push:
-    branches: [master]
+    branches:
+      - master
+  pull_request:
 
 jobs:
   build:
-    name: ghc ${{ matrix.ghc }}
-    runs-on: ubuntu-16.04
+    name: ${{ matrix.os }} / ghc ${{ matrix.ghc }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        cabal: ["2.4"]
+        os: [ubuntu-latest]
+        cabal: ["3.2"]
         ghc:
           - "8.8.3"
           - "8.10.1"
-
     steps:
     - uses: actions/checkout@v2
       if: github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.ref == 'refs/heads/master'
 
-    - uses: actions/setup-haskell@v1
-      name: Setup Haskell
+    - name: Setup Haskell
+      uses: actions/setup-haskell@v1.1.1
+      id: setup-haskell-cabal
       with:
         ghc-version: ${{ matrix.ghc }}
         cabal-version: ${{ matrix.cabal }}
 
-    - uses: actions/cache@v1
-      name: Cache ~/.cabal/store
+    - name: Freeze
+      run: cabal freeze
+
+    - name: Cache ~/.cabal/store
+      uses: actions/cache@v1
       with:
-        path: ~/.cabal/store
-        key: ${{ runner.os }}-${{ matrix.ghc }}-cabal
+        path: ${{ steps.setup-haskell-cabal.outputs.cabal-store }}
+        key: ${{ runner.os }}-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
 
     - name: Build
-      run: |
-        cabal v2-update
-        cabal v2-build --enable-tests --enable-benchmarks
+      run: cabal build all
 
-    - name: Test
-      run: |
-        echo 'No tests'
+    - name: Stan static analysis
+      uses: kowainik/stan-action@843ab0f8747fc3126cc362e98a6fa96c2d2fc68a
