@@ -42,5 +42,8 @@ jobs:
     - name: Build
       run: cabal build all
 
-    - name: Stan static analysis
-      uses: kowainik/stan-action@843ab0f8747fc3126cc362e98a6fa96c2d2fc68a
+    - name: Setup Stan
+      uses: kowainik/stan-action@4d980e85bfa576c3ee6d9a721c2f016b2b704dab
+      
+    - name: Run Stan
+      run: stan
