@@ -43,7 +43,7 @@ jobs:
       run: cabal build all
 
     - name: Setup Stan
-      uses: kowainik/stan-action@b90b22c59852d3edb27f7fcb3272eeae30492678
+      uses: kowainik/stan-action@fb93693bb24bfbb7b111ebce632fc4bca6ef2195
       
     - name: Run Stan
       run: stan
