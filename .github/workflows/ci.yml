@@ -49,6 +49,6 @@ jobs:
     - name: Run Stan
       run: |
         echo ${{ steps.stan.outputs.stanPath }}
-        echo ${{ env.PATH }}
+        echo $PATH
         ${{ steps.stan.outputs.stanPath }}
         stan
