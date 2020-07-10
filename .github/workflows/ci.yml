@@ -43,7 +43,10 @@ jobs:
       run: cabal build all
 
     - name: Setup Stan
-      uses: kowainik/stan-action@6d205332bee7dbcdc7f055c587326ff523ed9dd2
+      id: stan
+      uses: kowainik/stan-action@91e6748ffac66c1d5f1cb873eeb5cd2f6a5bfece
       
     - name: Run Stan
-      run: stan
+      run: |
+        echo ${{ steps.stan.outputs.stanPath }}
+        stan
