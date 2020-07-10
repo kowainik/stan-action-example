@@ -44,9 +44,11 @@ jobs:
 
     - name: Setup Stan
       id: stan
-      uses: kowainik/stan-action@91e6748ffac66c1d5f1cb873eeb5cd2f6a5bfece
+      uses: kowainik/stan-action@4180c3a15ca40a4ca9695a6fe40052543740c918
       
     - name: Run Stan
       run: |
         echo ${{ steps.stan.outputs.stanPath }}
+        echo ${{ env.PATH }}
+        ${{ steps.stan.outputs.stanPath }}
         stan
