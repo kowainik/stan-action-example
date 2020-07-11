@@ -44,7 +44,7 @@ jobs:
 
     - name: Setup Stan
       id: stan
-      uses: kowainik/stan-action@4180c3a15ca40a4ca9695a6fe40052543740c918
+      uses: kowainik/stan-action@8283a41b868860959941f8cf7d4323b000882a9d
       
     - name: Run Stan
       run: |
