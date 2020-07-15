@@ -42,5 +42,19 @@ jobs:
     - name: Build
       run: cabal build all
 
-    - name: Stan static analysis
-      uses: kowainik/stan-action@843ab0f8747fc3126cc362e98a6fa96c2d2fc68a
+  static_analysis:
+    needs: [build]
+    name: Stan Static Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Setup Stan
+      id: stan
+      uses: kowainik/stan-action@bd961bbaab88ff4bd8d108d31b33aeeb8bfd5dbd
+
+    - name: Run Stan
+      run: |
+        echo ${{ steps.stan.outputs.stanPath }}
+        echo $PATH
+        ${{ steps.stan.outputs.stanPath }}
+        stan
