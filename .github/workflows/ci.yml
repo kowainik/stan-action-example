@@ -50,7 +50,7 @@ jobs:
     steps:
     - name: Setup Stan
       id: stan
-      uses: kowainik/stan-action@81e7ca4e2787d0bbae07072cc1338854be1a4b0b
+      uses: kowainik/stan-action@bd961bbaab88ff4bd8d108d31b33aeeb8bfd5dbd
 
     - name: Run Stan
       run: |
